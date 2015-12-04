@@ -17,13 +17,16 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Eclipse
+#Eclipse
 .project
 .classpath
 
-# Data
-/data
+#Data
+data
 *.war
+
+#Personal test files
+*test*.*
 
 # =========================
 # Operating System Files
