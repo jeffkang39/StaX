@@ -1,4 +1,0 @@
-1. Get the number of posts with the given tag (i.e. Java) in a given year
-2. Sort the tag types based on total post views with that tag
-
-Note: our database is much larger than this (30gb), so we only attached a small subset of it. 
