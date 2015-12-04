@@ -289,9 +289,12 @@
  
 }
 .search {
-                padding:8px 15px;
-                background:rgba(50, 50, 50, 0.2);
-                border:0px solid #dbdbdb;
+    
+//    -moz-border-radius: 5px;
+//  -webkit-border-radius: 5px;
+                //padding:2px 15px;
+                //background:rgba(50, 50, 50, 0.2);
+                border:1px solid #4c4c4c;
                
 }
 .button {

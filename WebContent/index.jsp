@@ -56,21 +56,18 @@
 						<section>
 							<header>
 								<h2>Welcome to StaX! </h2>            
-								
+								<h1>What're you wondering about?</h1>
 							</header>
+                            <form height = "1px">
+                                <input type="text" placeholder="java" required>
+                                <input type="button" class=search value="Search">
+                            </form>
 							<a href="#" class="image full"><img src="images/pic07.jpg" alt="" /></a>
 						</section>
 					</div>
 					
 				</div>
 			</div>
-		</div>
-		
-		<div>
-				<form height = "1px">
-      		<input type="text" placeholder="Search..." required>
-        	<input type="button" value="Search">
-		</form>
 		</div>
 		
 		<!-- Footer -->
