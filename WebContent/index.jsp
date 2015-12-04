@@ -33,7 +33,7 @@
 	</head>
 	<body class="homepage">
 	
-	
+
 		<!-- Header -->
 		<div id="header">
 			<div class="container"> 
@@ -55,8 +55,8 @@
 					<div id="content" class="8u skel-cell-important">
 						<section>
 							<header>
-								<h2>Welcome to StaX!    <a href ="#">Get Started</h1></h2>            
-								<h1></a></h1>
+								<h2>Welcome to StaX! </h2>            
+								
 							</header>
 							<a href="#" class="image full"><img src="images/pic07.jpg" alt="" /></a>
 						</section>
@@ -65,7 +65,14 @@
 				</div>
 			</div>
 		</div>
-
+		
+		<div>
+				<form height = "1px">
+      		<input type="text" placeholder="Search..." required>
+        	<input type="button" value="Search">
+		</form>
+		</div>
+		
 		<!-- Footer -->
 		<div id="featured">
 			<div class="container">
