@@ -33,7 +33,7 @@
 	</head>
 	<body class="homepage">
 	
-	
+
 		<!-- Header -->
 		<div id="header">
 			<div class="container"> 
@@ -55,10 +55,20 @@
 					<div id="content" class="8u skel-cell-important">
 						<section>
 							<header>
+<<<<<<< HEAD
 								<h2>Search</h1></h2>            
 								<h1></a></h1>
 							</header>
 							<form> <input type="search" name="search"><button name="searchbutton">Go!</button></form>
+=======
+								<h2>Welcome to StaX! </h2>            
+								<h1>What're you wondering about?</h1>
+							</header>
+                            <form height = "1px">
+                                <input type="text" placeholder="java" required>
+                                <input type="button" class=search value="Search">
+                            </form>
+>>>>>>> refs/heads/dataless
 							<a href="#" class="image full"><img src="images/pic07.jpg" alt="" /></a>
 						</section>
 					</div>
@@ -66,7 +76,7 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<!-- Footer -->
 		<div id="featured">
 			<div class="container">
