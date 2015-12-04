@@ -25,12 +25,10 @@ $RECYCLE.BIN/
 data
 *.war
 
-<<<<<<< HEAD
 =======
 #Personal test files
 *test*.*
 
->>>>>>> refs/heads/dataless
 # =========================
 # Operating System Files
 # =========================
