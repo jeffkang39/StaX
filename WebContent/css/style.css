@@ -21,6 +21,10 @@
 		color: #4c4c4c;
 	}
 
+input {
+    width: 20em;
+}
+
 	h1,h2,h3,h4,h5,h6
 	{
 		text-transform: uppercase;
