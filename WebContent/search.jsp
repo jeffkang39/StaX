@@ -6,12 +6,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+		
+
 <title>Search Results</title>
 </head>
 <body>
 <%      
 	List<String> list = new ArrayList<String>();
 
+	String s = null;
+	String creationDateArr[] = null;
+	ArrayList<String> creationDate = new ArrayList<String>();
+    String word = "testing string";
+	
 	try {
 
 
@@ -52,6 +61,7 @@
 		       out.print("</tr>");
 		    
 		    //parse out the results
+		    
 		    while(result.next())
 		    {
 		       //make a row
@@ -65,10 +75,17 @@
 		       //Print out current bar/beer additional info: Manf or Address
 		    	   out.print(result.getString("Tags"));
 		       out.print("</td>");
-		       out.print("</tr>");
+		       out.print("<td>");
+		       //Print out current bar/beer additional info: Manf or Address
+		    	out.print(result.getString("CreationDate"));
+		   		creationDate.add(result.getString("CreationDate"));
+		       out.print("</td>");
+				out.print("</tr>");
 		      
 		    } 
 		    out.print("</table>");
+		    out.print(creationDate);	
+		   	creationDateArr = creationDate.toArray(new String[creationDate.size()]);
 		    
 		    //close the connection.
 		    con.close();
@@ -77,8 +94,83 @@
         out.print(e.toString());
 	}
 	
+	int[] dateChart = {0,0,0,0,0,0}; 
+	System.out.println(creationDate);	
 	
+	for(String date : creationDateArr){
+		out.print("<br>");
+		if(date.substring(8, 10).equals("31")){			
+			dateChart[0] = dateChart[0] + 1;
+		}
+		if(date.substring(8, 10).equals("01")){
+			dateChart[1] = dateChart[1] + 1;
+		}
+		if(date.substring(8, 10).equals("02")){			
+			dateChart[2] ++;
+		}
+		if(date.substring(8, 10).equals("03")){			
+			dateChart[3] ++;
+		}
+		if(date.substring(8, 10).equals("04")){			
+			dateChart[4] ++;
+		}
+		if(date.substring(8, 10).equals("05")){			
+			
+			dateChart[5] ++;
+		}
+	
+	}
+	System.out.println(dateChart[0]);
+	System.out.println(dateChart[1]);
+	System.out.println(dateChart[2]);
+	System.out.println(dateChart[3]);
+	System.out.println(dateChart[4]);
+	System.out.println(dateChart[5]);
+	
+
+	int test22[] = {1,2,3,4,5,6}; 
 %>
     
+    
+	<div id="container" style="width:100%; height:400px;"></div>
+    
+    <script>
+	$(function () {
+		
+		query = "date";
+		var test = [2,3,5,6,10,20];
+		var dateArray = ["07/31/2008", "08/1/2008", "08/2/2008", "08/3/2008", "08/4/2008", "08/5/2008"];
+		var languages = ["Java", "Python", "C++", "Ruby", "Node"];
+			
+		var dc1 = "<%=dateChart%>";
+		var test1 = <%=test22%>;
+		
+		$('#container').highcharts({
+	        chart: {
+	            type: 'line'
+	        },
+	        title: {
+	            text: 'Results'
+	        },
+	        xAxis: {
+	            //categories: ['Apples', 'Bananas', 'Oranges']
+	        	categories: dateArray
+	        },
+	        yAxis: {
+	            title: {
+	                text: 'Count' + query
+	            }
+	        },
+	        series: [{
+	            name: 'Query', 
+	            data: test1
+	        }, {
+	            name: 'John',
+	            data: [0,0,0,0,0,0]
+	        }]
+	    });
+	});
+	
+	</script>
 </body>
 </html>
