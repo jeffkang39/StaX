@@ -58,9 +58,9 @@
 								<h2>Welcome to StaX! </h2>            
 								<h1>What're you wondering about?</h1>
 							</header>
-                            <form height = "1px">
-                                <input type="text" placeholder="java" required>
-                                <input type="button" class=search value="Search">
+                            <form height = "1px" method="get" action="search.jsp" enctype=text/plain>
+                                <input type="text" name="searchbar" placeholder="java" required>
+                                <input type="submit" name="searchbutton" class=search value="Search">
                             </form>
 							<a href="#" class="image full"><img src="images/pic07.jpg" alt="" /></a>
 						</section>
