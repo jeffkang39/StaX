@@ -56,62 +56,34 @@
 						<section>
 							<header>
 								<h2>Welcome to StaX! </h2>            
-								<h1>What're you wondering about?</h1>
 							</header>
+                            <h1>What are you wondering about?</h1>
                             <form height = "1px" method="get" action="search.jsp" enctype=text/plain>
                                 <input type="text" name="searchbar" placeholder="java" required>
                                 <input type="submit" name="searchbutton" class=search value="Search">
                             </form>
+                            Enter a query above, and we'll display the top viewed question regarding the topic, the trend for number of posts in the topic, and which tags are commonly paired with this query!
                             <header>
-                            	<h1><a href="ranking.jsp">Tag Rankings</a></h1>
+                                <br>
+                            	<a href="ranking.jsp">
+                                    <h2>Tag Rankings</h2>
+                                </a>
+                                <br>
+                                Wondering what's trending? We'll show you the top five tags on Stack Overflow so you can know what you <em>should</em> know.
                             </header>
-							<a href="#" class="image full"><img src="images/pic07.jpg" alt="" /></a>
+                            
 						</section>
 					</div>
 					
 				</div>
 			</div>
 		</div>
-		
-		<!-- Footer -->
-		<div id="featured">
-			<div class="container">
-				<div class="row">
-					<div class="4u">
-						<h2>Learn more about our applications</h2>
-						<a href="#" class="image full"><img src="images/pic01.jpg" alt="" /></a>
-						<p></p>
-					</div>
-					<div class="4u">
-						<h2>Learn more about the developers</h2>
-						<a href="#" class="image full"><img src="images/pic02.jpg" alt="" /></a>
-						<p></p>
-					</div>
-					<div class="4u">
-						<h2>learn more about the developers</h2>
-						<a href="#" class="image full"><img src="images/pic03.jpg" alt="" /></a>
-						<p></p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-		<!-- Footer -->
 		<div id="footer">
 
 				<div class="row">
-					<p>Developed by: Nicholas Fong, Jeff Kang</p>
+					<p> Nicholas Fong, Jeffrey Kang</p>
 				</div>
 	
 		</div>
-
-		<!-- Copyright -->
-		<div id="copyright">
-			<div class="container">
-				Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
-			</div>
-		</div>
-		
 	</body>
 </html>
