@@ -26,13 +26,13 @@ TETESTETSTTSET
 		
 	    $('#container').highcharts({
 	        chart: {
-	            type: 'line'
+	            type: 'bar'
 	        },
 	        title: {
 	            text: 'Fruit Consumption'
 	        },
 	        xAxis: {
-	            categories: ['Apples', 'Bananas', 'Oranges']
+	            categories: ['java', 'java1', 'java2', 'java3', 'java4',]
 	        },
 	        yAxis: {
 	            title: {
@@ -41,10 +41,7 @@ TETESTETSTTSET
 	        },
 	        series: [{
 	            name: 'Jane',
-	            data: [1, 0, 4]
-	        }, {
-	            name: 'John',
-	            data: [5, 7, 3]
+	            data: [1, 0, 4, 5, 10]
 	        }]
 	    });
 	});

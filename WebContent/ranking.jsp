@@ -15,7 +15,8 @@
 <body>
 <%      
 	ArrayList<String> creationDate = new ArrayList<String>();
-	
+	String tagString = "";
+	String countString = "";
 	try {
 
 	    	//Create a connection string
@@ -32,67 +33,72 @@
 	    	//Run the query against the database.
 		    ResultSet result = stmt.executeQuery(str);
 
-			List taglist = new ArrayList<String>();
-			HashMap tagMap = new HashMap<String, Integer>();
+		    List<String> taglist = new ArrayList<String>();
+			HashMap<String, Integer> tagMap = new HashMap<String, Integer>();	
 
 			while(result.next()){
-				String tagString = result.getString("Tags");
-				String[] tags = tagString.split(" ");
-				for(String tag : tags){
+				// get tag ranking
+				String tagString1 = result.getString("Tags");
+				String[] tagArray = tagString1.split(" ");
+				for(String tag : tagArray){
 					if(!taglist.contains(tag)) taglist.add(tag);
-					int count = tagMap.get(tag);
-					if(count == null) count = 1;
-					else count++;
+					Object o = tagMap.get(tag);
+					int count = 0;
+					if(o != null) count = (Integer)o;
+					count++;
 					tagMap.put(tag, count);
 				}
-			}
-			
-			List countlist = new ArrayList<Integer>();
+		    } 
+		    
+			List<Integer> countlist = new ArrayList<Integer>();
 			for(String tag : taglist){
 				int count = tagMap.get(tag);
 				countlist.add(count);
 			} 
 			
-			List sortedcount = new ArrayList<Integer>();
+			List<Integer> sortedcount = new ArrayList<Integer>();
 			while(!countlist.isEmpty()){
 				int highest = 0;
 				for(int i : countlist){
 					if(i > highest) highest = i;
 				}
 				sortedcount.add(highest);
-				countlist.remove(highest);
+				countlist.remove((Integer)highest);
+			
 			}
 			
 			// keep top 5
-			if(sortedcount.size() > 5){
-				for(i = 4; i<sortedcount.size();i++){
-					sortedcount.remove(i);
+			if(sortedcount.size() > 6){
+				while(sortedcount.size() > 6){
+					sortedcount.remove(6);
 				}
 			}
+			sortedcount.remove(0);
 			
 			List<String> sortedtags = new ArrayList<String>();
 			for(int count : sortedcount){
 				for(String tag : taglist){
-					if(tagMap.get(tag) == count){
+					if(tagMap.get(tag) == count && !sortedtags.contains(tag)){
 						sortedtags.add(tag);
 						break;
 					}
 				}
 			}
 		    
-			String tagString = "";
-			for(String s : sortedtags){
+			for(String t : sortedtags){
 				if(tagString != "") tagString += ",";
-				tagString += s;
+				tagString += t;
 			}
+			out.print(tagString);
 			
-			String countString = ""; 
-			for (int s : sortedcount){
+			for (int c : sortedcount){
 				if(countString != "") countString +=",";
-				countString += s;
+				countString += c;
 			}
-			
-		    //close the connection.
+			out.print(countString);
+		    //close the connection. 
+		    System.out.println("tag " + tagString);
+		    System.out.println("count " + countString);
 		    con.close();
 
 	} catch (Exception e) {
@@ -103,42 +109,42 @@
     
 	<div id="container" style="width:100%; height:400px;"></div>
     
+	
+	<div id="container2" style="width:100%; height:400px;"></div>   
     <script>
 	$(function () {
 		
-		query = "date";
-		var test = [2,3,5,6,10,20];
-		var dateArray = ["07/31/2008", "08/1/2008", "08/2/2008", "08/3/2008", "08/4/2008", "08/5/2008"];
-		var languages = ["Java", "Python", "C++", "Ruby", "Node"];
-			
-		var dc1 = "<%=dateChart%>";
-		var test1 = <%=test22%>;
 		
-		$('#container').highcharts({
+		var tagString = "<%=tagString%>"
+		var tagStringSplit = tagString.split(",");
+		var countString = "<%=countString%>";
+		var countStringSplit = countString.split(",");
+		for(var i=0; i<countStringSplit.length; i++) { countStringSplit[i] = +countStringSplit[i]; } 
+	
+		$('#container2').highcharts({
 	        chart: {
-	            type: 'line'
+	            type: 'bar'
 	        },
 	        title: {
-	            text: 'Results'
+	            text: 'Top 5 Tags'
 	        },
 	        xAxis: {
 	            //categories: ['Apples', 'Bananas', 'Oranges']
-	        	categories: dateArray
+	        	categories: tagStringSplit
 	        },
 	        yAxis: {
 	            title: {
-	                text: 'Count' + query
+	                text: 'Count'
 	            }
 	        },
 	        series: [{
-	            name: 'Query', 
-	            data: test1
-	        }, {
-	            name: 'John',
-	            data: [0,0,0,0,0,0]
+	            name: 'Number of New Posts per Day',
+	            data: countStringSplit
 	        }]
 	    });
 	});
+	
+	
 	
 	</script>
 </body>

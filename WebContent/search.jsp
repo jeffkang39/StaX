@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,12 +20,13 @@
 	String s = null;
 	String creationDateArr[] = null;
 	ArrayList<String> creationDate = new ArrayList<String>();
+	ArrayList<String> tags = new ArrayList<String>();
     String word = "testing string";
-	
+    String tagString = "";
+    String countString = ""; 
+    String entity= "";
+    
 	try {
-
-
-
 	    	//Create a connection string
 			//String url = "jdbc:mysql://your_VM:3306/your_db";
 	    	String url = "jdbc:mysql://stax.czqccd0tvajp.us-east-1.rds.amazonaws.com:3306/stax";
@@ -37,7 +39,7 @@
 	    	//Create a SQL statement
 		    Statement stmt = con.createStatement();
 	    	//Get the selected radio button from the HelloWorld.jsp
-		    String entity = request.getParameter("searchbar");
+		    entity = request.getParameter("searchbar");
 	    	//Make a SELECT query from the table specified by the 'command' parameter at the HelloWorld.jsp
 			String str = "select * from Posts where Posts.Tags like'%"+entity+"%' or Posts.Title like '%"+entity+"%'";
 	    	//Run the query against the database.
@@ -60,6 +62,9 @@
 		       out.print("</td>");
 		       out.print("</tr>");
 		    
+		       
+	        List<String> taglist = new ArrayList<String>();
+			HashMap<String, Integer> tagMap = new HashMap<String, Integer>();	
 		    //parse out the results
 		    
 		    while(result.next())
@@ -79,19 +84,82 @@
 		       //Print out current bar/beer additional info: Manf or Address
 		    	out.print(result.getString("CreationDate"));
 		   		creationDate.add(result.getString("CreationDate"));
+		   		tags.add(result.getString("Tags"));
 		       out.print("</td>");
 				out.print("</tr>");
 		      
+				
+				// get tag ranking
+				String tagString1 = result.getString("Tags");
+				String[] tagArray = tagString1.split(" ");
+				for(String tag : tagArray){
+					if(tag.equals(entity)) continue;
+					if(!taglist.contains(tag)) taglist.add(tag);
+					Object o = tagMap.get(tag);
+					int count = 0;
+					if(o != null) count = (Integer)o;
+					count++;
+					tagMap.put(tag, count);
+				}
 		    } 
 		    out.print("</table>");
 		    out.print(creationDate);	
 		   	creationDateArr = creationDate.toArray(new String[creationDate.size()]);
 		    
+
+			List<Integer> countlist = new ArrayList<Integer>();
+			for(String tag : taglist){
+				int count = tagMap.get(tag);
+				countlist.add(count);
+			} 
+			
+			List<Integer> sortedcount = new ArrayList<Integer>();
+			while(!countlist.isEmpty()){
+				int highest = 0;
+				for(int i : countlist){
+					if(i > highest) highest = i;
+				}
+				sortedcount.add(highest);
+				countlist.remove((Integer)highest);
+			
+			}
+			
+			// keep top 5
+			if(sortedcount.size() > 5){
+				
+				while(sortedcount.size() > 5){
+					sortedcount.remove(5);
+				}
+			}
+			
+			List<String> sortedtags = new ArrayList<String>();
+			for(int count : sortedcount){
+				for(String tag : taglist){
+					if(tagMap.get(tag) == count && !sortedtags.contains(tag)){
+						sortedtags.add(tag);
+						break;
+					}
+				}
+			}
+		    
+			for(String t : sortedtags){
+				if(tagString != "") tagString += ",";
+				tagString += t;
+			}
+			out.print(tagString);
+			
+			for (int c : sortedcount){
+				if(countString != "") countString +=",";
+				countString += c;
+			}
+
 		    //close the connection.
 		    con.close();
 
 	} catch (Exception e) {
         out.print(e.toString());
+        e.printStackTrace();
+        System.out.println("CATCH");
 	}
 	
 	int[] dateChart = {0,0,0,0,0,0}; 
@@ -128,9 +196,42 @@
 		dateChartString = dateChartString + " " + dateChart[i];
 	}
 	
+	rankTags(tags);
+	
 %>
     
+ <%! 
+   public static void rankTags(ArrayList<String> tagsList) {
     
+	 List<String> uniqueTokens = new ArrayList<String>();
+	 String[] tempList = null; //tempList holds the tokens for the specific tuple.
+	 
+	 for(int i = 0; i < tagsList.size(); i++){
+		
+	 	tempList = tagsList.get(i).split(" ");
+	 		for(int j = 0; j < tempList.length; j++){
+	 			
+	 			if(uniqueTokens.contains(tempList[j]) == false){
+	 				uniqueTokens.add(tempList[j]);
+	 			}
+	 		}
+	 }
+	 
+	 //uniqueTokens has all the unique tokens at this point
+	 
+		 
+	 //System.out.println(uniqueTokens);
+	 
+	 int[] AL = new int[uniqueTokens.size()];
+	
+	 for(int i = 0; i < AL.length ;i ++){
+		 
+	 }
+	 
+	 //all the tags
+	
+   } 
+%>
 	<div id="container" style="width:100%; height:400px;"></div>
     
     <script>
@@ -174,6 +275,44 @@
 	
 	</script>
 	
+	<div id="container2" style="width:100%; height:400px;"></div>   
+    <script>
+	$(function () {
+		
+		
+		var tagString = "<%=tagString%>"
+		var tagStringSplit = tagString.split(",");
+		var entity = "<%=entity%>";
+		var countString = "<%=countString%>";
+		var countStringSplit = countString.split(",");
+		for(var i=0; i<countStringSplit.length; i++) { countStringSplit[i] = +countStringSplit[i]; } 
+	
+		$('#container2').highcharts({
+	        chart: {
+	            type: 'bar'
+	        },
+	        title: {
+	            text: 'Top 5 Tags paired with ' + entity
+	        },
+	        xAxis: {
+	            //categories: ['Apples', 'Bananas', 'Oranges']
+	        	categories: tagStringSplit
+	        },
+	        yAxis: {
+	            title: {
+	                text: 'Count'
+	            }
+	        },
+	        series: [{
+	            name: 'Number of New Posts per Day',
+	            data: countStringSplit
+	        }]
+	    });
+	});
+	
+	</script>
+	
+		
 	
 	
 </body>

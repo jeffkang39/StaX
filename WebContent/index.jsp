@@ -62,6 +62,9 @@
                                 <input type="text" name="searchbar" placeholder="java" required>
                                 <input type="submit" name="searchbutton" class=search value="Search">
                             </form>
+                            <header>
+                            	<h1><a href="ranking.jsp">Tag Rankings</a></h1>
+                            </header>
 							<a href="#" class="image full"><img src="images/pic07.jpg" alt="" /></a>
 						</section>
 					</div>
