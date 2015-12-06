@@ -25,6 +25,10 @@
     String tagString = "";
     String countString = ""; 
     String entity= "";
+	String title ="";
+	int views=0;
+	String author="";
+	String link="";
     
 	try {
 	    	//Create a connection string
@@ -101,11 +105,20 @@
 					count++;
 					tagMap.put(tag, count);
 				}
+				
+				// highest viewed post
+				if(Integer.parseInt(result.getString("ViewCount")) > views){
+					views = Integer.parseInt(result.getString("ViewCount"));
+					link = "http://stackoverflow.com/questions/"+result.getInt("Id");
+					title = result.getString("Title");
+					author = result.getString("OwnerDisplayName");
+				}
+				
 		    } 
 		    out.print("</table>");
 		    out.print(creationDate);	
 		   	creationDateArr = creationDate.toArray(new String[creationDate.size()]);
-		    
+		    out.print("<a href=\""+link+"\">"+title+"</a>");
 
 			List<Integer> countlist = new ArrayList<Integer>();
 			for(String tag : taglist){
