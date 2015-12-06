@@ -95,10 +95,8 @@
 	}
 	
 	int[] dateChart = {0,0,0,0,0,0}; 
-	System.out.println(creationDate);	
 	
 	for(String date : creationDateArr){
-		out.print("<br>");
 		if(date.substring(8, 10).equals("31")){			
 			dateChart[0] = dateChart[0] + 1;
 		}
@@ -120,15 +118,16 @@
 		}
 	
 	}
-	System.out.println(dateChart[0]);
-	System.out.println(dateChart[1]);
-	System.out.println(dateChart[2]);
-	System.out.println(dateChart[3]);
-	System.out.println(dateChart[4]);
-	System.out.println(dateChart[5]);
-	
 
 	int test22[] = {1,2,3,4,5,6}; 
+	String testString = "TEST STRING";
+	
+	String dateChartString = "";
+	String temp;
+	for(int i = 0; i <dateChart.length; i++){
+		dateChartString = dateChartString + " " + dateChart[i];
+	}
+	
 %>
     
     
@@ -137,13 +136,18 @@
     <script>
 	$(function () {
 		
-		query = "date";
-		var test = [2,3,5,6,10,20];
+		
+		var test = [20,3,5,6,10,20];
+		var test2 = "<%=dateChartString%>";
+		
+		var test3 = test2.split(" ");
+		
+		for(var i=0; i<test3.length; i++) { test3[i] = +test3[i]; } 
+		var test4 = test3.slice(1, test3.length)
+		
+		var ts = "<%=testString%>";
 		var dateArray = ["07/31/2008", "08/1/2008", "08/2/2008", "08/3/2008", "08/4/2008", "08/5/2008"];
 		var languages = ["Java", "Python", "C++", "Ruby", "Node"];
-			
-		var dc1 = "<%=dateChart%>";
-		var test1 = <%=test22%>;
 		
 		$('#container').highcharts({
 	        chart: {
@@ -158,19 +162,19 @@
 	        },
 	        yAxis: {
 	            title: {
-	                text: 'Count' + query
+	                text: 'Count'
 	            }
 	        },
 	        series: [{
-	            name: 'Query', 
-	            data: test1
-	        }, {
-	            name: 'John',
-	            data: [0,0,0,0,0,0]
+	            name: 'Number of New Posts per Day',
+	            data: test4
 	        }]
 	    });
 	});
 	
 	</script>
+	
+	
+	
 </body>
 </html>

@@ -22,9 +22,11 @@ TETESTETSTTSET
 	<script>
 	
 	$(function () { 
+		
+		
 	    $('#container').highcharts({
 	        chart: {
-	            type: 'bar'
+	            type: 'line'
 	        },
 	        title: {
 	            text: 'Fruit Consumption'
